@@ -1,16 +1,17 @@
 name: PowerShell Script Validation
 on: [push]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install PowerShell
-        run: |
-          sudo apt-get install -y wget
-          wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.0/powershell-7.1.0-linux-x64.tar.gz
-          tar -xvf ./powershell-7.1.0-linux-x64.tar.gz
-          sudo mv ./powershell-7.1.0-linux-x64 /usr/local/bin/powershell
+
+      - name: Set up PowerShell
+        uses: PowerShell/setup-powershell@v2
+        with:
+          version: '7.1.0'  # You can change this version if needed
+
       - name: Run PowerShell Script
-        run: pwsh ./createvm.ps1
+        run: pwsh ./createVM.ps1
 
